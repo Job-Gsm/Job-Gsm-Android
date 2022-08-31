@@ -23,7 +23,7 @@ class LoginMenuActivity : AppCompatActivity() {
         }
 
         binding.registerBtn.setOnClickListener {
-
+            startActivity(Intent(this, SignInActivity::class.java))
         }
     }
 

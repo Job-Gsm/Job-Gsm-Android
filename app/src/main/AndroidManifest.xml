@@ -14,9 +14,13 @@
         android:theme="@style/Theme.Job_GSM"
         tools:targetApi="31">
         <activity
+            android:name=".view.SignInActivity"
+            android:exported="false"
+            android:theme="@style/Transparent" />
+        <activity
             android:name=".view.LoginActivity"
             android:exported="false"
-            android:theme="@style/Transparent"/>
+            android:theme="@style/Transparent" />
         <activity
             android:name=".view.SplashActivity"
             android:exported="true"
