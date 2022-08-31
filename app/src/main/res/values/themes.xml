@@ -14,16 +14,22 @@
         <!-- Customize your theme here. -->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+
+        <item name="fontFamily">@font/kreon_regular</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="Transparent" parent="Theme.Job_GSM">
         <item name="android:windowContentOverlay">@null</item>
         <item name="windowActionBarOverlay">true</item>
         <item name="colorPrimary">@android:color/transparent</item>
+
+        <item name="fontFamily">@font/kreon_regular</item>
     </style>
 
     <style name="Actionbar" parent="Theme.Job_GSM">
         <item name="windowActionBarOverlay">false</item>
         <item name="colorPrimary">@color/main_color</item>
+        <item name="fontFamily">@font/kreon_regular</item>
     </style>
 </resources>
