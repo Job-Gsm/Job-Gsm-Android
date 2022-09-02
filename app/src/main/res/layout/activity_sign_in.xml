@@ -36,9 +36,10 @@
             android:layout_gravity="center"/>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/email_input_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="25dp"
             android:layout_marginStart="35dp"
             android:layout_marginEnd="30dp">
 
@@ -52,11 +53,12 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/pw_input_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="35dp"
             android:layout_marginEnd="30dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             app:passwordToggleEnabled="true"
             app:passwordToggleTint="@null"
             app:passwordToggleDrawable="@drawable/toggle_icon_status">
@@ -71,11 +73,12 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/pw_check_input_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="35dp"
             android:layout_marginEnd="30dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             app:passwordToggleEnabled="true"
             app:passwordToggleTint="@null"
             app:passwordToggleDrawable="@drawable/toggle_icon_status">
@@ -90,11 +93,12 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/nickname_input_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="35dp"
             android:layout_marginEnd="30dp"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="20dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/sign_in_nick_name"
