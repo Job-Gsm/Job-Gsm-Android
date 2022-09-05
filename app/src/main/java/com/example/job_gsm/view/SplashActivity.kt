@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.WindowManager
 import com.example.job_gsm.R
+import com.example.job_gsm.view.user.LoginMenuActivity
 
 class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

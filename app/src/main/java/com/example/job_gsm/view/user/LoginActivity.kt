@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.example.job_gsm.databinding.ActivityLoginBinding
+import com.example.job_gsm.view.MainActivity
 import com.example.job_gsm.viewmodel.SignInViewModel
 
 class LoginActivity : AppCompatActivity() {
@@ -61,7 +62,7 @@ class LoginActivity : AppCompatActivity() {
                         pwInputLay.error = "길이가 10자~20자 사이여야 합니다."
                     }
                     else -> {
-//                        startActivity(Intent(this, ))
+                        startActivity(Intent(this, MainActivity::class.java))
                     }
                 }
             } else {

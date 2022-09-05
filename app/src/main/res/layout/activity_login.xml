@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/login_bg"
-    tools:context=".view.LoginActivity">
+    tools:context=".view.user.LoginActivity">
 
     <ImageView
         android:id="@+id/login_image_bg"
@@ -30,7 +30,7 @@
         app:layout_constraintTop_toTopOf="@+id/login_image_bg" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/id_input_layout"
+        android:id="@+id/email_input_layout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
@@ -58,7 +58,7 @@
         android:layout_marginEnd="30dp"
         app:layout_constraintEnd_toEndOf="@+id/login_image_bg"
         app:layout_constraintStart_toStartOf="@+id/login_image_bg"
-        app:layout_constraintTop_toBottomOf="@+id/id_input_layout"
+        app:layout_constraintTop_toBottomOf="@+id/email_input_layout"
         app:passwordToggleEnabled="true"
         app:passwordToggleTint="@null"
         app:passwordToggleDrawable="@drawable/toggle_icon_status">
