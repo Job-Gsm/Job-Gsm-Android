@@ -1,4 +1,4 @@
-package com.example.job_gsm.view
+package com.example.job_gsm.view.user
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -7,14 +7,13 @@ import android.util.Log
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.Observer
 import com.example.job_gsm.databinding.ActivitySignInBinding
-import com.example.job_gsm.viewmodel.RegistrationViewModel
+import com.example.job_gsm.viewmodel.SignUpViewModel
 
 class SignInActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignInBinding
-    private val viewModel by viewModels<RegistrationViewModel>()
+    private val viewModel by viewModels<SignUpViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +23,9 @@ class SignInActivity : AppCompatActivity() {
         setStatusBarTranslucent(true)
 
         binding.signInFinishBtn.setOnClickListener {
+            binding.emailInputLayout.isErrorEnabled = false
+            binding.nicknameInputLayout.isErrorEnabled = false
+            binding.pwInputLayout.isErrorEnabled = false
             signIn(binding.signInNickName.text.toString(), binding.signInEmail.text.toString(), binding.signInPw.text.toString())
         }
     }
@@ -42,20 +44,30 @@ class SignInActivity : AppCompatActivity() {
                 if (pw != binding.signInPwCheck.text.toString()) {
                     pwCheckInputLay.error = "비밀번호가 다릅니다."
                 } else {
-                    emailInputLay.isErrorEnabled = true
-                    usernameInputLay.isErrorEnabled = true
-                    pwInputLay.isErrorEnabled = true
-
                     when(it.message) {
-                        "사용 중인 이메일 입니다." -> emailInputLay.error = "이미 사용 중인 이메일입니다."
-                        "username : 크기가 2에서 5 사이여야 합니다" -> usernameInputLay.error = "길이가 2에서 5사이여야 합니다."
-                        "email : 학교계정을 입력해주세요" -> emailInputLay.error = "학교계정을 입력해주세요."
-                        "password : 크기가 10에서 20 사이여야 합니다" -> pwInputLay.error = "길이가 10에서 20사이여야 합니다."
+                        "사용 중인 이메일 입니다." -> {
+                            emailInputLay.isErrorEnabled = true
+                            emailInputLay.error = "이미 사용 중인 이메일입니다."
+                        }
+                        "username : 크기가 2에서 5 사이여야 합니다" -> {
+                            usernameInputLay.isErrorEnabled = true
+                            usernameInputLay.error = "길이가 2에서 5사이여야 합니다."
+                        }
+                        "email : 학교계정을 입력해주세요" -> {
+                            emailInputLay.isErrorEnabled = true
+                            emailInputLay.error = "학교계정을 입력해주세요."
+                        }
+                        "password : 크기가 10에서 20 사이여야 합니다" -> {
+                            pwInputLay.isErrorEnabled = true
+                            pwInputLay.error = "길이가 10에서 20사이여야 합니다."
+                        }
                         "email : 학교계정을 입력해주세요, password : 크기가 10에서 20 사이여야 합니다" -> {
+                            emailInputLay.isErrorEnabled = true
+                            pwInputLay.isErrorEnabled = true
                             emailInputLay.error = "학교계정을 입력해주세요."
                             pwInputLay.error = "길이가 10에서 20사이여야 합니다."
                         }
-                        else -> {
+                        "성공" -> {
                             Toast.makeText(this, "회원가입이 완료되었습니다.", Toast.LENGTH_SHORT).show()
                             startActivity(Intent(this, LoginActivity::class.java))
                             finish()

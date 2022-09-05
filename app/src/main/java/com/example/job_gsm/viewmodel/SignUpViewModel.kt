@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.example.job_gsm.model.ApiClient
 import com.example.job_gsm.model.api.SignUpService
 import com.example.job_gsm.model.data.request.SignUpRequest
-import com.example.job_gsm.model.data.response.SignUpResponse
+import com.example.job_gsm.model.data.response.SignResponse
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -16,13 +16,13 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class RegistrationViewModel: ViewModel() {
+class SignUpViewModel: ViewModel() {
     companion object {
         private const val TAG = "RegistrationViewModel"
     }
 
     var signUpService: SignUpService
-    var signUpServiceLiveData: MutableLiveData<SignUpResponse?> = MutableLiveData()
+    var signUpServiceLiveData: MutableLiveData<SignResponse?> = MutableLiveData()
 
     init {
         val interceptor = HttpLoggingInterceptor()
@@ -41,13 +41,13 @@ class RegistrationViewModel: ViewModel() {
 
     fun signUpObserver(username: String, email: String, pw: String) {
         Log.d(TAG, "signUpObserver: ${username}, ${email}, $pw")
-        signUpService.signUpService(SignUpRequest(username, email, pw)).enqueue(object :Callback<SignUpResponse> {
-            override fun onResponse(call: Call<SignUpResponse>, response: Response<SignUpResponse>) {
+        signUpService.signUpService(SignUpRequest(username, email, pw)).enqueue(object :Callback<SignResponse> {
+            override fun onResponse(call: Call<SignResponse>, response: Response<SignResponse>) {
                 Log.d(TAG, "onResponse: ${response.body()}")
                 signUpServiceLiveData.value = response.body()
             }
 
-            override fun onFailure(call: Call<SignUpResponse>, t: Throwable) {
+            override fun onFailure(call: Call<SignResponse>, t: Throwable) {
                 Log.e(TAG, "onFailure: ${t.message}", t.cause)
                 signUpServiceLiveData.value = null
             }
