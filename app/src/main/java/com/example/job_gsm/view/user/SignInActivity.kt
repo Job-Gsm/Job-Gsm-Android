@@ -1,12 +1,17 @@
 package com.example.job_gsm.view.user
 
 import android.content.Intent
+import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.activity.viewModels
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
+import com.example.job_gsm.R
 import com.example.job_gsm.databinding.ActivitySignInBinding
 import com.example.job_gsm.view.MainActivity
 import com.example.job_gsm.viewmodel.SignInViewModel
@@ -20,7 +25,6 @@ class SignInActivity : AppCompatActivity() {
 
         binding = ActivitySignInBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setStatusBarTranslucent(true)
 
         binding.signInText.setOnClickListener {
             startActivity(Intent(this, SignUpActivity::class.java))
@@ -29,7 +33,23 @@ class SignInActivity : AppCompatActivity() {
         binding.logInBtn.setOnClickListener {
             binding.emailInputLayout.isErrorEnabled = false
             binding.pwInputLayout.isErrorEnabled = false
+            ifEditTextIsEmpty()
+        }
+    }
+
+    private fun ifEditTextIsEmpty() {
+        if (binding.loginId.text.toString().isNotEmpty() && binding.loginPw.text.toString().isNotEmpty()) {
             login(binding.loginId.text.toString(), binding.loginPw.text.toString())
+        } else if (binding.loginId.text.toString().isEmpty() && binding.loginPw.text.toString().isEmpty()) {
+            binding.emailInputLayout.error = "필수 입력사항입니다."
+            binding.pwInputLayout.error = "필수 입력사항입니다."
+            return
+        } else if (binding.loginId.text.toString().isEmpty()) {
+            binding.emailInputLayout.error = "필수 입력사항입니다."
+            return
+        }  else if (binding.loginPw.text.toString().isEmpty()) {
+            binding.pwInputLayout.error = "필수 입력사항입니다."
+            return
         }
     }
 
@@ -41,7 +61,7 @@ class SignInActivity : AppCompatActivity() {
         viewModel.signInServiceLiveData.observe(this, Observer {
             if (it != null) {
                 when(it.message) {
-                    "계정을 찾을 수 없습니다." -> {
+                    "사용자를 찾을 수 없습니다." -> {
                         emailInputLay.error = "계정을 찾을 수 없습니다."
                     }
                     "비밀번호가 일치하지 않습니다." -> {
@@ -69,13 +89,5 @@ class SignInActivity : AppCompatActivity() {
                 Log.e("TAG", "login: ${it?.status}")
             }
         })
-    }
-
-    private fun setStatusBarTranslucent(makeTranslucent: Boolean) {
-        if (makeTranslucent) {
-            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        } else {
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        }
     }
 }
