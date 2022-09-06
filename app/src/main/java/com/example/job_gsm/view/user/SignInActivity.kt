@@ -5,15 +5,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.WindowManager
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.example.job_gsm.databinding.ActivitySignInBinding
-import com.example.job_gsm.viewmodel.SignUpViewModel
+import com.example.job_gsm.view.MainActivity
+import com.example.job_gsm.viewmodel.SignInViewModel
 
 class SignInActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignInBinding
-    private val viewModel by viewModels<SignUpViewModel>()
+    private val viewModel by viewModels<SignInViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,60 +22,51 @@ class SignInActivity : AppCompatActivity() {
         setContentView(binding.root)
         setStatusBarTranslucent(true)
 
-        binding.signInFinishBtn.setOnClickListener {
+        binding.signInText.setOnClickListener {
+            startActivity(Intent(this, SignUpActivity::class.java))
+        }
+
+        binding.logInBtn.setOnClickListener {
             binding.emailInputLayout.isErrorEnabled = false
-            binding.nicknameInputLayout.isErrorEnabled = false
             binding.pwInputLayout.isErrorEnabled = false
-            signIn(binding.signInNickName.text.toString(), binding.signInEmail.text.toString(), binding.signInPw.text.toString())
+            login(binding.loginId.text.toString(), binding.loginPw.text.toString())
         }
     }
 
-    private fun signIn(username: String, email: String, pw: String) {
+    private fun login(email: String, pw: String) {
         val emailInputLay = binding.emailInputLayout
         val pwInputLay = binding.pwInputLayout
-        val pwCheckInputLay = binding.pwCheckInputLayout
-        val usernameInputLay = binding.nicknameInputLayout
 
-        viewModel.signUpObserver(username, email, pw)
-        viewModel.signUpServiceLiveData.observe(this, Observer {
+        viewModel.signInObserver(email, pw)
+        viewModel.signInServiceLiveData.observe(this, Observer {
             if (it != null) {
-                Log.d("TAG", "signIn: ${it.status}")
-
-                if (pw != binding.signInPwCheck.text.toString()) {
-                    pwCheckInputLay.error = "비밀번호가 다릅니다."
-                } else {
-                    when(it.message) {
-                        "사용 중인 이메일 입니다." -> {
-                            emailInputLay.isErrorEnabled = true
-                            emailInputLay.error = "이미 사용 중인 이메일입니다."
-                        }
-                        "username : 크기가 2에서 5 사이여야 합니다" -> {
-                            usernameInputLay.isErrorEnabled = true
-                            usernameInputLay.error = "길이가 2에서 5사이여야 합니다."
-                        }
-                        "email : 학교계정을 입력해주세요" -> {
-                            emailInputLay.isErrorEnabled = true
-                            emailInputLay.error = "학교계정을 입력해주세요."
-                        }
-                        "password : 크기가 10에서 20 사이여야 합니다" -> {
-                            pwInputLay.isErrorEnabled = true
-                            pwInputLay.error = "길이가 10에서 20사이여야 합니다."
-                        }
-                        "email : 학교계정을 입력해주세요, password : 크기가 10에서 20 사이여야 합니다" -> {
-                            emailInputLay.isErrorEnabled = true
-                            pwInputLay.isErrorEnabled = true
-                            emailInputLay.error = "학교계정을 입력해주세요."
-                            pwInputLay.error = "길이가 10에서 20사이여야 합니다."
-                        }
-                        "성공" -> {
-                            Toast.makeText(this, "회원가입이 완료되었습니다.", Toast.LENGTH_SHORT).show()
-                            startActivity(Intent(this, LoginActivity::class.java))
-                            finish()
-                        }
+                when(it.message) {
+                    "계정을 찾을 수 없습니다." -> {
+                        emailInputLay.error = "계정을 찾을 수 없습니다."
+                    }
+                    "비밀번호가 일치하지 않습니다." -> {
+                        pwInputLay.error = "비밀번호가 일치하지 않습니다."
+                    }
+                    "email : 학교계정을 입력해주세요" -> {
+                        emailInputLay.error = "학교계정을 입력해 주세요."
+                    }
+                    "email : 이메일 형식이 아닙니다" -> {
+                        emailInputLay.error = "이메일 형식이 다릅니다."
+                    }
+                    "password : 크기가 4에서 15 사이여야 합니다" -> {
+                        pwInputLay.error = "길이가 4자~15자 사이여야 합니다."
+                    }
+                    "password : 크기가 4에서 15 사이여야 합니다, email : 학교계정을 입력해주세요" -> {
+                        emailInputLay.error = "학교계정을 입력해 주세요."
+                        pwInputLay.error = "길이가 4자~15자 사이여야 합니다."
+                    }
+                    "성공" -> {
+                        startActivity(Intent(this, MainActivity::class.java))
+                        Log.d("TAG", "login: ${it.result?.token?.accessToken}")
                     }
                 }
             } else {
-                Log.d("FAIL", "signIn: ${it?.status}")
+                Log.e("TAG", "login: ${it?.status}")
             }
         })
     }

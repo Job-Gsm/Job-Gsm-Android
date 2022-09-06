@@ -23,6 +23,10 @@ class SignUpActivity : AppCompatActivity() {
         setStatusBarTranslucent(true)
 
         binding.signInFinishBtn.setOnClickListener {
+            binding.emailInputLayout.isErrorEnabled = false
+            binding.nicknameInputLayout.isErrorEnabled = false
+            binding.pwInputLayout.isErrorEnabled = false
+
             signIn(binding.signInNickName.text.toString(), binding.signInEmail.text.toString(), binding.signInPw.text.toString())
         }
     }

@@ -10,6 +10,7 @@ import com.example.job_gsm.model.data.response.SignResponse
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -18,7 +19,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class SignUpViewModel: ViewModel() {
     companion object {
-        private const val TAG = "RegistrationViewModel"
+        private const val TAG = "SignUpViewModel"
     }
 
     var signUpService: SignUpService
@@ -43,8 +44,18 @@ class SignUpViewModel: ViewModel() {
         Log.d(TAG, "signUpObserver: ${username}, ${email}, $pw")
         signUpService.signUpService(SignUpRequest(username, email, pw)).enqueue(object :Callback<SignResponse> {
             override fun onResponse(call: Call<SignResponse>, response: Response<SignResponse>) {
-                Log.d(TAG, "onResponse: ${response.body()}")
-                signUpServiceLiveData.value = response.body()
+                if (response.isSuccessful) {
+                    Log.d(TAG, "onResponse: ${response.body()?.status}")
+                    signUpServiceLiveData.value = response.body()
+                } else {
+                    val jsonErrorObj = JSONObject(response.errorBody()!!.string())
+                    val status = jsonErrorObj.getString("status")
+                    val message = jsonErrorObj.getString("message")
+                    val signUpResponse = SignResponse(null, status, message, null)
+
+                    signUpServiceLiveData.value = signUpResponse
+                    Log.d(TAG, "onResponse else: $signUpResponse")
+                }
             }
 
             override fun onFailure(call: Call<SignResponse>, t: Throwable) {
