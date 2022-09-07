@@ -70,7 +70,7 @@ class SignUpActivity : AppCompatActivity() {
                                 emailInputLay.error = "존재하지 않는 계정입니다."
                             }
                             "중복된 이메일 입니다." -> {
-                                emailInputLay.error = "이미 가입 된 이메일입니다."
+                                emailInputLay.error = "이미 가입된 이메일입니다."
                             }
                             "username : 크기가 2에서 5 사이여야 합니다" -> {
                                 usernameInputLay.error = "길이가 2에서 5사이여야 합니다."
