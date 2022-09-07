@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.WindowManager
+import androidx.core.app.ActivityCompat
 import com.example.job_gsm.databinding.ActivityLoginMenuBinding
 
 class LoginMenuActivity : AppCompatActivity() {
@@ -14,15 +15,14 @@ class LoginMenuActivity : AppCompatActivity() {
 
         binding = ActivityLoginMenuBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         setStatusBarTranslucent(true);
 
         binding.loginBtn.setOnClickListener {
-            startActivity(Intent(this, LoginActivity::class.java))
+            startActivity(Intent(this, SignInActivity::class.java))
         }
 
         binding.registerBtn.setOnClickListener {
-            startActivity(Intent(this, SignInActivity::class.java))
+            startActivity(Intent(this, SignUpActivity::class.java))
         }
     }
 

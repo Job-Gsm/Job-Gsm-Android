@@ -17,14 +17,15 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
-            android:exported="false" />
-        <activity
-            android:name=".view.user.SignInActivity"
+            android:name=".view.MainActivity"
             android:exported="false"
             android:theme="@style/Transparent" />
         <activity
-            android:name=".view.user.LoginActivity"
+            android:name=".view.user.SignUpActivity"
+            android:exported="false"
+            android:theme="@style/Transparent" />
+        <activity
+            android:name=".view.user.SignInActivity"
             android:exported="false"
             android:theme="@style/Transparent" />
         <activity
