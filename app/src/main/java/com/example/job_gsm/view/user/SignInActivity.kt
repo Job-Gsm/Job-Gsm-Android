@@ -35,6 +35,10 @@ class SignInActivity : AppCompatActivity() {
             binding.pwInputLayout.isErrorEnabled = false
             ifEditTextIsEmpty()
         }
+
+        binding.forgetText.setOnClickListener {
+            startActivity(Intent(this, ForgotPwActivity::class.java))
+        }
     }
 
     private fun ifEditTextIsEmpty() {
