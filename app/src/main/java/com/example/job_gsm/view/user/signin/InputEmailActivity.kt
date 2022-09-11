@@ -1,15 +1,20 @@
-package com.example.job_gsm.view.user
+package com.example.job_gsm.view.user.signin
 
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import com.example.job_gsm.databinding.ActivityInputEmailBinding
 import com.example.job_gsm.model.data.request.SignUpRequest
+import com.example.job_gsm.viewmodel.SignUpEmailViewModel
 
 class InputEmailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityInputEmailBinding
+    private val viewModel by viewModels<SignUpEmailViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -26,10 +31,20 @@ class InputEmailActivity : AppCompatActivity() {
                 binding.certificationEmailErrorText.visibility = View.VISIBLE
                 binding.certificationEmailErrorText.text = "필수 입력항목입니다."
             } else {
-                signUpRequest.email = binding.certificationEmailEditText.text.toString()
-                Log.d("TAG", "onCreate signup request: $signUpRequest")
-                startActivity(Intent(this, EmailCertificationActivity::class.java)
-                    .putExtra("signRequest", signUpRequest))
+                viewModel.signUpSendEmail(binding.certificationEmailEditText.text.toString())
+                viewModel.signUpEmailServiceLiveData.observe(this, Observer {
+                    when(it?.message) {
+                        "email : 학교계정을 입력해주세요" -> {
+                            binding.certificationEmailErrorText.text = "학교계정을 입력하세요"
+                        }
+                        else -> {
+                            signUpRequest.email = binding.certificationEmailEditText.text.toString()
+                            Log.d("TAG", "onCreate signup request: $signUpRequest")
+                            startActivity(Intent(this, EmailCertificationActivity::class.java)
+                                .putExtra("signRequest", signUpRequest))
+                        }
+                    }
+                })
             }
         }
     }
