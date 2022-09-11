@@ -1,19 +1,14 @@
 package com.example.job_gsm.view.user
 
 import android.content.Intent
-import android.graphics.drawable.ColorDrawable
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.ViewGroup
-import android.view.WindowManager
 import androidx.activity.viewModels
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
-import com.example.job_gsm.R
 import com.example.job_gsm.databinding.ActivitySignInBinding
 import com.example.job_gsm.view.MainActivity
+import com.example.job_gsm.view.user.signin.SignUpActivity
 import com.example.job_gsm.viewmodel.SignInViewModel
 
 class SignInActivity : AppCompatActivity() {

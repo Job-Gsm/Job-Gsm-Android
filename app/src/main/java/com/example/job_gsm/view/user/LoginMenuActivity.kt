@@ -4,8 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.WindowManager
-import androidx.core.app.ActivityCompat
 import com.example.job_gsm.databinding.ActivityLoginMenuBinding
+import com.example.job_gsm.view.user.signin.SignUpActivity
 
 class LoginMenuActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginMenuBinding

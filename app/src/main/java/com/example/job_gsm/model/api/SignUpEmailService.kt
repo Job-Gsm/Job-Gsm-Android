@@ -5,7 +5,7 @@ import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.POST
 
-interface ForgetPwService {
-    @POST("/user/send/email")
-    fun forgetPw(@Body email: String): Call<CertificationResponse>
+interface SignUpEmailService {
+    @POST
+    fun signInEmail(@Body email: String): Call<CertificationResponse>
 }

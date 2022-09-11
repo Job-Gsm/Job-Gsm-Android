@@ -1,12 +1,9 @@
-package com.example.job_gsm.view.user
+package com.example.job_gsm.view.user.signin
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import com.example.job_gsm.databinding.ActivitySignUpBinding
 import com.example.job_gsm.model.data.request.SignUpRequest
 import com.example.job_gsm.viewmodel.SignUpViewModel
