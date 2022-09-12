@@ -1,4 +1,4 @@
-package com.example.job_gsm.view.user.signin
+package com.example.job_gsm.view.user.signup
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

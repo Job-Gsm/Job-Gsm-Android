@@ -8,7 +8,7 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.example.job_gsm.databinding.ActivitySignInBinding
 import com.example.job_gsm.view.MainActivity
-import com.example.job_gsm.view.user.signin.SignUpActivity
+import com.example.job_gsm.view.user.signup.SignUpActivity
 import com.example.job_gsm.viewmodel.SignInViewModel
 
 class SignInActivity : AppCompatActivity() {
