@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.MainActivity">
+    tools:context=".view.MainActivity"
+    android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/main_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:layout_width="48dp"
@@ -24,6 +23,7 @@
             android:layout_height="wrap_content"
             android:text="GSM 홈"
             android:layout_marginStart="35dp"
+            android:layout_gravity="center"
             android:textSize="20sp"
             android:theme="@style/text"/>
 
@@ -34,5 +34,39 @@
             android:src="@drawable/main_menu"
             android:layout_gravity="end"
             android:layout_marginEnd="15sp"/>
+
+        <ImageView
+            android:id="@+id/add_project_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/add_project"
+            android:layout_gravity="end"
+            android:layout_marginEnd="15dp"/>
     </androidx.appcompat.widget.Toolbar>
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/ad_project_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"/>
+
+    <EditText
+        android:id="@+id/search_project_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="50dp"
+        android:hint="프로젝트 검색"
+        android:background="@drawable/forget_pw_edit_text_bg"
+        android:drawableEnd="@drawable/ic_baseline_search_32"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/project_list_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="40dp"/>
+</LinearLayout>
