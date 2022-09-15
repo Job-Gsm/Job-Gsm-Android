@@ -29,6 +29,11 @@ class ForgotPwActivity : AppCompatActivity() {
             binding.emailErrorText.visibility = View.GONE
             newPwSendEmail(binding.forgetEmailEditText.text.toString())
         }
+
+        binding.changePwBtn.setOnClickListener {
+            // 비밀번호 변경 로직
+        }
+
         binding.backLoginText.setOnClickListener { finish() }
     }
 
@@ -50,16 +55,12 @@ class ForgotPwActivity : AppCompatActivity() {
                             dialogBinding.certNumber5.text.toString()
 
                     dialogBinding.certificationBtn.setOnClickListener {
-                        if (number == response.result.toString()) { // 인증번호가 같다.
-                            Toast.makeText(this, "인증이 완료되었습니다.", Toast.LENGTH_SHORT).show()
-                            binding.newPwLinear.visibility = View.VISIBLE
-
-                            binding.changePwBtn.setOnClickListener {
-                                // 비밀번호 변경 로직
-                            }
-                        } else {    // 다르다.
-                            binding.emailErrorText.text = "인증번호가 다릅니다."
-                        }
+//                        if (number == response.result.toString()) { // 인증번호가 같다.
+//                            Toast.makeText(this, "인증이 완료되었습니다.", Toast.LENGTH_SHORT).show()
+//                            binding.newPwLinear.visibility = View.VISIBLE
+//                        } else {    // 다르다.
+//                            binding.emailErrorText.text = "인증번호가 다릅니다."
+//                        }
                     }
                 }
                 false -> {

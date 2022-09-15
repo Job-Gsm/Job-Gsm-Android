@@ -1,5 +1,6 @@
 package com.example.job_gsm.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.job_gsm.model.ApiClient
@@ -41,10 +42,11 @@ class SignUpEmailViewModel: ViewModel() {
                     signUpEmailServiceLiveData.value = response.body()
                 } else {
                     val jsonErrorObj = JSONObject(response.errorBody()!!.string())
-                    val status = jsonErrorObj.getString("status")
-                    val message = jsonErrorObj.getInt("message")
+                    Log.d("TAG", "onResponse 400: $jsonErrorObj")
+                    val status = jsonErrorObj.getInt("status")
+                    val message = jsonErrorObj.getString("message")
 
-                    val certificationResponse = CertificationResponse(false, status, message, null)
+                    val certificationResponse = CertificationResponse(false, message, status)
                     signUpEmailServiceLiveData.value = certificationResponse
                 }
             }

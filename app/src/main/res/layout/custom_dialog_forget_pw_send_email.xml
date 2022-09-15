@@ -2,7 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="380dp"
-    android:layout_height="240dp"
+    android:layout_height="270dp"
     android:background="@drawable/custom_dialog_bg"
     android:orientation="vertical">
 
@@ -11,64 +11,113 @@
         android:layout_height="wrap_content"
         android:text="인증번호를 입력하세요"
         android:layout_marginTop="40dp"
-        android:textSize="26sp"
+        android:textSize="24sp"
         android:layout_gravity="center"/>
+
+    <LinearLayout
+        android:id="@+id/cert_timer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="40dp"
+        android:visibility="visible"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="남은 인증 시간: "/>
+
+        <TextView
+            android:id="@+id/cert_time_minute"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="5"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" : "
+            android:textSize="18sp"/>
+
+        <TextView
+            android:id="@+id/cert_tome_second"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00"
+            android:textSize="16sp"/>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginStart="50dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginTop="30dp">
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp">
 
         <EditText
             android:id="@+id/cert_number1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:background="@drawable/certification_number_edit_text_bg"
             android:singleLine="true"
+            android:gravity="center"
+            android:layout_weight="1"
             android:nextFocusRight="@id/cert_number2"
+            android:inputType="number"
             android:maxLength="1"/>
 
         <EditText
             android:id="@+id/cert_number2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:background="@drawable/certification_number_edit_text_bg"
             android:singleLine="true"
             android:layout_marginStart="5dp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:inputType="number"
             android:nextFocusRight="@id/cert_number3"
             android:maxLength="1"/>
 
         <EditText
             android:id="@+id/cert_number3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:background="@drawable/certification_number_edit_text_bg"
             android:singleLine="true"
             android:layout_marginStart="5dp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:inputType="number"
             android:nextFocusRight="@id/cert_number4"
             android:maxLength="1"/>
 
         <EditText
             android:id="@+id/cert_number4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:background="@drawable/certification_number_edit_text_bg"
             android:singleLine="true"
+            android:gravity="center"
+            android:layout_weight="1"
             android:nextFocusRight="@id/cert_number5"
+            android:inputType="number"
             android:layout_marginStart="5dp"
             android:maxLength="1"/>
 
         <EditText
             android:id="@+id/cert_number5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:background="@drawable/certification_number_edit_text_bg"
             android:singleLine="true"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:inputType="number"
             android:layout_marginStart="5dp"
-            android:layout_gravity="end"
             android:maxLength="1"/>
     </LinearLayout>
 

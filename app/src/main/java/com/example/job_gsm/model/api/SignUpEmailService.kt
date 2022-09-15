@@ -6,6 +6,6 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface SignUpEmailService {
-    @POST
+    @POST("user/signup/send/email")
     fun signInEmail(@Body email: String): Call<CertificationResponse>
 }
