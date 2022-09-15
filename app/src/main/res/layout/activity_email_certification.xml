@@ -58,7 +58,7 @@
                 android:background="@drawable/certification_number_edit_text_bg"
                 android:gravity="center"
                 android:singleLine="true"
-                android:nextFocusRight="@id/check_email_number2"
+                android:nextFocusDown="@id/check_email_number2"
                 android:maxLength="1"/>
 
             <EditText

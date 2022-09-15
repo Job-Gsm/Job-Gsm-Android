@@ -54,8 +54,7 @@
                     android:id="@+id/sign_in_email"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/forget_pw_edit_text_bg"
-                    android:paddingStart="10dp"
+                    android:drawableStart="@drawable/mail_icon"
                     android:hint="email"
                     android:layout_marginEnd="10dp"
                     android:inputType="textEmailAddress"/>
@@ -70,6 +69,16 @@
                 android:layout_gravity="top"
                 android:background="@drawable/certification_email_btn_bg"/>
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/check_cert_email_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="인증이 완료되었습니다."
+            android:textColor="#4CAF50"
+            android:visibility="gone"
+            android:layout_marginStart="35dp"/>
+
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/pw_input_layout"
@@ -90,8 +99,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="password"
-                android:paddingStart="10dp"
-                android:background="@drawable/forget_pw_edit_text_bg"
+                android:drawableStart="@drawable/baseline_lock_open_black_24dp"
                 android:inputType="textPassword"/>
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -114,8 +122,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="password check"
-                android:paddingStart="10dp"
-                android:background="@drawable/forget_pw_edit_text_bg"
+                android:drawableStart="@drawable/baseline_lock_open_black_24dp"
                 android:inputType="textPassword"/>
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -132,8 +139,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="nick name"
-                android:paddingStart="10dp"
-                android:background="@drawable/forget_pw_edit_text_bg" />
+                android:drawableStart="@drawable/baseline_person_black_24dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
