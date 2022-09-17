@@ -13,11 +13,13 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.example.job_gsm.databinding.ActivityForgotPwBinding
 import com.example.job_gsm.databinding.CustomDialogForgetPwSendEmailBinding
+import com.example.job_gsm.viewmodel.CheckEmailViewModel
 import com.example.job_gsm.viewmodel.ForgetPwViewModel
 
 class ForgotPwActivity : AppCompatActivity() {
     private lateinit var binding: ActivityForgotPwBinding
     private val viewModel by viewModels<ForgetPwViewModel>()
+    private val checkEmailViewModel by viewModels<CheckEmailViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +28,7 @@ class ForgotPwActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.emailCertificationBtn.setOnClickListener {
-            binding.emailErrorText.visibility = View.GONE
+            binding.emailStatusText.visibility = View.GONE
             newPwSendEmail(binding.forgetEmailEditText.text.toString())
         }
 
@@ -50,30 +52,44 @@ class ForgotPwActivity : AppCompatActivity() {
                     mDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
                     mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
 
-                    val number = dialogBinding.certNumber1.text.toString() + dialogBinding.certNumber2.text.toString() +
-                            dialogBinding.certNumber3.text.toString() + dialogBinding.certNumber4.text.toString() +
-                            dialogBinding.certNumber5.text.toString()
-
                     dialogBinding.certificationBtn.setOnClickListener {
-//                        if (number == response.result.toString()) { // 인증번호가 같다.
-//                            Toast.makeText(this, "인증이 완료되었습니다.", Toast.LENGTH_SHORT).show()
-//                            binding.newPwLinear.visibility = View.VISIBLE
-//                        } else {    // 다르다.
-//                            binding.emailErrorText.text = "인증번호가 다릅니다."
-//                        }
+                        checkEmailViewModel.checkEmail(getNumber(dialogBinding))
+                        checkEmailViewModel.checkEmailServiceLiveData.observe(this, Observer {
+                            if (it?.status == 400) {
+                                Toast.makeText(this, "인증번호 5자리를 입력해주세요.", Toast.LENGTH_SHORT).show()
+                            } else if (it?.success == true) {
+                                Toast.makeText(this, "인증이 완료되었습니다.", Toast.LENGTH_SHORT).show()
+                                dialog.dismiss()
+                                binding.newPwLinear.visibility = View.VISIBLE
+                                binding.emailStatusText.text = "인증 완료됨"
+                                binding.emailStatusText.setTextColor(Color.GREEN)
+                            }
+                        })
                     }
                 }
                 false -> {
                     if (response.status == 404) {
-                        binding.emailErrorText.visibility = View.VISIBLE
-                        binding.emailErrorText.text = "계정을 찾을 수 없습니다."
+                        binding.emailStatusText.visibility = View.VISIBLE
+                        binding.emailStatusText.text = "계정을 찾을 수 없습니다."
+                        binding.emailStatusText.setTextColor(Color.RED)
                     } else if (response.status == 400) {
-                        binding.emailErrorText.visibility = View.VISIBLE
-                        binding.emailErrorText.text = "학교계정을 입력해주세요."
+                        binding.emailStatusText.visibility = View.VISIBLE
+                        binding.emailStatusText.text = "학교계정을 입력해주세요."
+                        binding.emailStatusText.setTextColor(Color.RED)
                     }
                 }
                 else -> { return@Observer }
             }
         })
+    }
+
+    private fun getNumber(dialogBinding: CustomDialogForgetPwSendEmailBinding): String {
+        val num1 = dialogBinding.certNumber1.text.toString()
+        val num2 = dialogBinding.certNumber2.text.toString()
+        val num3 = dialogBinding.certNumber3.text.toString()
+        val num4 = dialogBinding.certNumber4.text.toString()
+        val num5 = dialogBinding.certNumber5.text.toString()
+
+        return num1+num2+num3+num4+num5
     }
 }

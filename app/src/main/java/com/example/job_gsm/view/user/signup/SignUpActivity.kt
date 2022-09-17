@@ -36,7 +36,7 @@ class SignUpActivity : AppCompatActivity() {
             binding.pwInputLayout.error = ""
             binding.pwCheckInputLayout.error = ""
 
-            signIn()
+            signUp()
         }
 
         binding.certSignInEmailBtn.setOnClickListener {
@@ -56,8 +56,10 @@ class SignUpActivity : AppCompatActivity() {
         }
     }
 
-    private fun signIn() {
-
+    private fun signUp() {
+        if (binding.checkCertEmailText.visibility == View.GONE) {
+            Log.d("TAG", "signUp: 잘됨")
+        }
     }
 
     // create custom dialog
@@ -81,6 +83,7 @@ class SignUpActivity : AppCompatActivity() {
                     Log.d("TAG", "sendEmail: 인증 실패")
                     Toast.makeText(this, "인증번호 5자리를 입력해주세요.", Toast.LENGTH_SHORT).show()
                 } else if (response?.success == true) {
+                    // 인증 완료시 나오는 텍스트들 잘 낭나 테스트
                     Log.d("TAG", "sendEmail: 인증 완료")
                     Toast.makeText(this, "인증이 완료되었습니다.", Toast.LENGTH_SHORT).show()
                     binding.emailInputLayout.isErrorEnabled = false

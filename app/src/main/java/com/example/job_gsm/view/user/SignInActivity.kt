@@ -84,8 +84,6 @@ class SignInActivity : AppCompatActivity() {
                         Log.d("TAG", "login: ${it.result?.token?.accessToken}")
                     }
                 }
-            } else {
-                Log.e("TAG", "login: ${it?.status}")
             }
         })
     }

@@ -56,13 +56,12 @@
                 android:background="@drawable/forgot_pw_btn_layout"/>
         </LinearLayout>
         <TextView
-            android:id="@+id/email_error_text"
+            android:id="@+id/email_status_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="오류 메시지"
             android:visibility="gone"
-            android:layout_marginStart="30dp"
-            android:textColor="#ff0000"/>
+            android:layout_marginStart="30dp" />
 
         <LinearLayout
             android:id="@+id/new_pw_linear"
