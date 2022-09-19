@@ -42,7 +42,7 @@ class CheckEmailViewModel: ViewModel() {
                     checkEmailServiceLiveData.value = response.body()
                 } else {
                     val jsonErrorObj = JSONObject(response.errorBody()!!.string())
-                    val status = jsonErrorObj.getInt("status")
+                    val status = jsonErrorObj.getString("status")
                     val message = jsonErrorObj.getString("message")
 
                     val certificationResponse = CertificationResponse(false, message, status)
@@ -51,7 +51,7 @@ class CheckEmailViewModel: ViewModel() {
             }
 
             override fun onFailure(call: Call<CertificationResponse>, t: Throwable) {
-
+                Log.e("FAIL", "onFailure: ${t.message}, ${t.stackTrace}", t.cause)
             }
         })
     }

@@ -2,6 +2,7 @@ package com.example.job_gsm.view.user.signup
 
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -15,13 +16,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.example.job_gsm.databinding.ActivitySignUpBinding
 import com.example.job_gsm.databinding.CustomDialogForgetPwSendEmailBinding
+import com.example.job_gsm.model.data.request.SignUpRequest
 import com.example.job_gsm.viewmodel.CheckEmailViewModel
 import com.example.job_gsm.viewmodel.SignUpEmailViewModel
 import com.example.job_gsm.viewmodel.SignUpViewModel
 
 class SignUpActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignUpBinding
-    private val viewModel by viewModels<SignUpViewModel>()
     private val signUpEmailViewModel by viewModels<SignUpEmailViewModel>()
     private val checkEmailViewModel by viewModels<CheckEmailViewModel>()
 
@@ -31,22 +32,35 @@ class SignUpActivity : AppCompatActivity() {
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val checkEmail = binding.checkCertEmailText
+        val checkPw = binding.checkCertPwText
+        val checkPwCheck = binding.checkCertPwCheckText
         binding.signInFinishBtn.setOnClickListener {
-            binding.nicknameInputLayout.error = ""
-            binding.pwInputLayout.error = ""
-            binding.pwCheckInputLayout.error = ""
+            checkEmail.visibility = View.INVISIBLE
+            checkPw.visibility = View.INVISIBLE
+            checkPwCheck.visibility = View.INVISIBLE
 
-            signUp()
+            if (binding.signInPw.text.toString() != binding.signInPwCheck.text.toString()) {
+                checkPwCheck.visibility = View.VISIBLE
+                checkPwCheck.text = "비밀번호가 일치하지 않습니다."
+            } else {
+                toGetUserInfo()
+            }
         }
 
         binding.certSignInEmailBtn.setOnClickListener {
             if (binding.signInEmail.text!!.isEmpty()) {
-                binding.emailInputLayout.error = "필수 입력 항목입니다."
+                checkEmail.visibility = View.VISIBLE
+                checkEmail.text = "필수 입력 항목입니다."
+                Log.d("TAG", "onCreate: is empty")
             } else {
                 signUpEmailViewModel.signUpSendEmail(binding.signInEmail.text.toString())
                 signUpEmailViewModel.signUpEmailServiceLiveData.observe(this, Observer {
+                    Log.d("TAG", "onCreate: $it")
                     if (it?.message == "email : 학교계정을 입력해주세요") {
-                        binding.emailInputLayout.error = "학교계정을 입력해주세요"
+                        Log.d("TAG", "onCreate: not school email")
+                        checkEmail.visibility = View.VISIBLE
+                        checkEmail.text = "학교계정을 입력해주세요"
                     } else {
                         // 이메일을 보냄
                         sendEmail()
@@ -56,9 +70,10 @@ class SignUpActivity : AppCompatActivity() {
         }
     }
 
-    private fun signUp() {
-        if (binding.checkCertEmailText.visibility == View.GONE) {
-            Log.d("TAG", "signUp: 잘됨")
+    private fun toGetUserInfo() {
+        if (binding.checkCertEmailText.text.toString() == "인증이 완료되었습니다.") {
+            startActivity(Intent(this, GetUserInfoActivity::class.java)
+                .putExtra("user", SignUpRequest("", binding.signInEmail.text.toString(), binding.signInPw.text.toString())))
         }
     }
 
@@ -79,21 +94,18 @@ class SignUpActivity : AppCompatActivity() {
         dialogBinding.certificationBtn.setOnClickListener {
             checkEmailViewModel.checkEmail(getNumber(dialogBinding))
             checkEmailViewModel.checkEmailServiceLiveData.observe(this, Observer { response ->
-                if (response?.status == 400) {
+                if (response?.status == "400") {
                     Log.d("TAG", "sendEmail: 인증 실패")
                     Toast.makeText(this, "인증번호 5자리를 입력해주세요.", Toast.LENGTH_SHORT).show()
                 } else if (response?.success == true) {
-                    // 인증 완료시 나오는 텍스트들 잘 낭나 테스트
+                    // 인증 완료시 나오는 텍스트들 잘 나오나 테스트
                     Log.d("TAG", "sendEmail: 인증 완료")
                     Toast.makeText(this, "인증이 완료되었습니다.", Toast.LENGTH_SHORT).show()
-                    binding.emailInputLayout.isErrorEnabled = false
-                    binding.checkCertEmailText.visibility = View.VISIBLE
                     dialog.dismiss()
+                    binding.checkCertEmailText.visibility = View.VISIBLE
+                    binding.checkCertEmailText.text = "인증이 완료되었습니다."
                 }
             })
-
-            Toast.makeText(this, "인증이 완료되었습니다.", Toast.LENGTH_SHORT).show()
-            dialog.dismiss()
         }
     }
 

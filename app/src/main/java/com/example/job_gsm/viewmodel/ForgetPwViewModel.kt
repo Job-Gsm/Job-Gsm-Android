@@ -42,7 +42,7 @@ class ForgetPwViewModel: ViewModel() {
                 } else {
                     val jsonErrorObj = JSONObject(response.errorBody()!!.string())
                     val status = jsonErrorObj.getString("status")
-                    val message = jsonErrorObj.getInt("message")
+                    val message = jsonErrorObj.getString("message")
 
                     val certificationResponse = CertificationResponse(false, status, message)
                     forgetPwServiceLiveData.value = certificationResponse

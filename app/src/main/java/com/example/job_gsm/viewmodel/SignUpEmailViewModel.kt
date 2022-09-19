@@ -43,7 +43,7 @@ class SignUpEmailViewModel: ViewModel() {
                 } else {
                     val jsonErrorObj = JSONObject(response.errorBody()!!.string())
                     Log.d("TAG", "onResponse 400: $jsonErrorObj")
-                    val status = jsonErrorObj.getInt("status")
+                    val status = jsonErrorObj.getString("status")
                     val message = jsonErrorObj.getString("message")
 
                     val certificationResponse = CertificationResponse(false, message, status)
@@ -53,6 +53,7 @@ class SignUpEmailViewModel: ViewModel() {
 
             override fun onFailure(call: Call<CertificationResponse>, t: Throwable) {
                 signUpEmailServiceLiveData.value = null
+                Log.e("FAIL", "onFailure: ${t.message}, ${t.stackTrace}", t.cause)
             }
         })
     }

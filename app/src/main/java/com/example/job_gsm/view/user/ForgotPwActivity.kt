@@ -55,7 +55,7 @@ class ForgotPwActivity : AppCompatActivity() {
                     dialogBinding.certificationBtn.setOnClickListener {
                         checkEmailViewModel.checkEmail(getNumber(dialogBinding))
                         checkEmailViewModel.checkEmailServiceLiveData.observe(this, Observer {
-                            if (it?.status == 400) {
+                            if (it?.status == "400") {
                                 Toast.makeText(this, "인증번호 5자리를 입력해주세요.", Toast.LENGTH_SHORT).show()
                             } else if (it?.success == true) {
                                 Toast.makeText(this, "인증이 완료되었습니다.", Toast.LENGTH_SHORT).show()
@@ -68,11 +68,11 @@ class ForgotPwActivity : AppCompatActivity() {
                     }
                 }
                 false -> {
-                    if (response.status == 404) {
+                    if (response.status == "404") {
                         binding.emailStatusText.visibility = View.VISIBLE
                         binding.emailStatusText.text = "계정을 찾을 수 없습니다."
                         binding.emailStatusText.setTextColor(Color.RED)
-                    } else if (response.status == 400) {
+                    } else if (response.status == "400") {
                         binding.emailStatusText.visibility = View.VISIBLE
                         binding.emailStatusText.text = "학교계정을 입력해주세요."
                         binding.emailStatusText.setTextColor(Color.RED)
