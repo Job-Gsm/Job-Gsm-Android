@@ -43,22 +43,15 @@
             android:layout_marginTop="25dp"
             android:orientation="horizontal">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/email_input_layout"
+            <EditText
+                android:id="@+id/sign_in_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:errorEnabled="true">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/sign_in_email"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:drawableStart="@drawable/mail_icon"
-                    android:hint="email"
-                    android:layout_marginEnd="10dp"
-                    android:inputType="textEmailAddress"/>
-            </com.google.android.material.textfield.TextInputLayout>
+                android:hint="email"
+                android:paddingStart="10dp"
+                android:background="@drawable/forget_pw_edit_text_bg"
+                android:layout_marginEnd="10dp"/>
 
             <Button
                 android:id="@+id/cert_sign_in_email_btn"
@@ -75,10 +68,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="인증이 완료되었습니다."
-            android:textColor="#4CAF50"
-            android:visibility="gone"
+            android:visibility="invisible"
             android:layout_marginStart="35dp"/>
-
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/pw_input_layout"
@@ -86,12 +77,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:layout_marginEnd="30dp"
-            android:layout_marginTop="3dp"
-            app:errorEnabled="true"
+            android:layout_marginTop="15dp"
             app:passwordToggleEnabled="true"
             app:passwordToggleTint="@null"
-            app:boxStrokeWidth="0dp"
-            app:boxStrokeWidthFocused="0dp"
             app:passwordToggleDrawable="@drawable/toggle_icon_status">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -99,9 +87,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="password"
-                android:drawableStart="@drawable/baseline_lock_open_black_24dp"
+                android:paddingStart="10dp"
+                android:background="@drawable/forget_pw_edit_text_bg"
                 android:inputType="textPassword"/>
         </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/check_cert_pw_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="오류"
+            android:visibility="invisible"
+            android:layout_marginStart="40dp"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/pw_check_input_layout"
@@ -109,10 +106,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:layout_marginEnd="30dp"
-            android:layout_marginTop="3dp"
-            app:errorEnabled="true"
-            app:boxStrokeWidth="0dp"
-            app:boxStrokeWidthFocused="0dp"
+            android:layout_marginTop="15dp"
             app:passwordToggleEnabled="true"
             app:passwordToggleTint="@null"
             app:passwordToggleDrawable="@drawable/toggle_icon_status">
@@ -122,25 +116,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="password check"
-                android:drawableStart="@drawable/baseline_lock_open_black_24dp"
+                android:background="@drawable/forget_pw_edit_text_bg"
+                android:paddingStart="10dp"
                 android:inputType="textPassword"/>
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/nickname_input_layout"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/check_cert_pw_check_text"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginTop="3dp">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/sign_in_nick_name"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="nick name"
-                android:drawableStart="@drawable/baseline_person_black_24dp" />
-        </com.google.android.material.textfield.TextInputLayout>
+            android:text="오류"
+            android:layout_marginStart="40dp"
+            android:visibility="invisible"/>
 
         <Button
             android:id="@+id/sign_in_finish_btn"
@@ -148,8 +135,8 @@
             android:layout_height="wrap_content"
             android:background="@drawable/btn_layout1"
             android:layout_gravity="center"
-            android:layout_marginTop="30dp"
-            android:text="가입"
+            android:layout_marginTop="50dp"
+            android:text="이동"
             android:textSize="20sp"
             android:textColor="@color/white"/>
     </LinearLayout>
