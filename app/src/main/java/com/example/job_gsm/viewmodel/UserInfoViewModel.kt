@@ -4,7 +4,8 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.job_gsm.model.ApiClient
-import com.example.job_gsm.model.api.SignUpEmailService
+import com.example.job_gsm.model.api.UserInfoService
+import com.example.job_gsm.model.data.request.UserInfoRequest
 import com.example.job_gsm.model.data.response.BaseUserResponse
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
@@ -16,9 +17,13 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class SignUpEmailViewModel: ViewModel() {
-    var signUpEmailService: SignUpEmailService
-    var signUpEmailServiceLiveData: MutableLiveData<BaseUserResponse?> = MutableLiveData()
+class UserInfoViewModel: ViewModel() {
+    var userInfoService: UserInfoService
+    var userInfoLiveData: MutableLiveData<BaseUserResponse?> = MutableLiveData()
+
+    companion object {
+        private const val TAG = "UserInfoViewModel"
+    }
 
     init {
         val interceptor = HttpLoggingInterceptor()
@@ -27,33 +32,31 @@ class SignUpEmailViewModel: ViewModel() {
             .addInterceptor(interceptor)
             .build()
 
-        signUpEmailService = Retrofit.Builder()
+        userInfoService = Retrofit.Builder()
             .baseUrl(ApiClient.BASE_URL)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
             .build()
-            .create(SignUpEmailService::class.java)
+            .create(UserInfoService::class.java)
     }
 
-    fun signUpSendEmail(email: String) {
-        signUpEmailService.signInEmail(email).enqueue(object :Callback<BaseUserResponse> {
+    fun setUserInfo(email: String, username: String, github: String, discord: String) {
+        userInfoService.setUserInfo(UserInfoRequest(email, username, github, discord)).enqueue(object :Callback<BaseUserResponse> {
             override fun onResponse(call: Call<BaseUserResponse>, response: Response<BaseUserResponse>) {
                 if (response.isSuccessful) {
-                    signUpEmailServiceLiveData.value = response.body()
+                    userInfoLiveData.value = response.body()
                 } else {
                     val jsonErrorObj = JSONObject(response.errorBody()!!.string())
                     Log.d("TAG", "onResponse 400: $jsonErrorObj")
                     val status = jsonErrorObj.getString("status")
                     val message = jsonErrorObj.getString("message")
 
-                    val baseUserResponse = BaseUserResponse(false, message, status)
-                    signUpEmailServiceLiveData.value = baseUserResponse
+                    userInfoLiveData.value = BaseUserResponse(false, message, status)
                 }
             }
 
             override fun onFailure(call: Call<BaseUserResponse>, t: Throwable) {
-                signUpEmailServiceLiveData.value = null
-                Log.e("FAIL", "onFailure: ${t.message}, ${t.stackTrace}", t.cause)
+                Log.e(TAG, "onFailure: ${t.message}, ${t.stackTrace}", t.cause)
             }
         })
     }

@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.job_gsm.model.ApiClient
 import com.example.job_gsm.model.api.ForgetPwService
-import com.example.job_gsm.model.data.response.CertificationResponse
+import com.example.job_gsm.model.data.response.BaseUserResponse
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -17,7 +17,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class ForgetPwViewModel: ViewModel() {
     var forgetPwService: ForgetPwService
-    var forgetPwServiceLiveData: MutableLiveData<CertificationResponse?> = MutableLiveData()
+    var forgetPwServiceLiveData: MutableLiveData<BaseUserResponse?> = MutableLiveData()
 
     init {
         val interceptor = HttpLoggingInterceptor()
@@ -35,8 +35,8 @@ class ForgetPwViewModel: ViewModel() {
     }
 
     fun forgetPw(email: String) {
-        forgetPwService.forgetPw(email).enqueue(object :Callback<CertificationResponse> {
-            override fun onResponse(call: Call<CertificationResponse>, response: Response<CertificationResponse>) {
+        forgetPwService.forgetPw(email).enqueue(object :Callback<BaseUserResponse> {
+            override fun onResponse(call: Call<BaseUserResponse>, response: Response<BaseUserResponse>) {
                 if (response.isSuccessful) {
                     forgetPwServiceLiveData.value = response.body()
                 } else {
@@ -44,12 +44,12 @@ class ForgetPwViewModel: ViewModel() {
                     val status = jsonErrorObj.getString("status")
                     val message = jsonErrorObj.getString("message")
 
-                    val certificationResponse = CertificationResponse(false, status, message)
-                    forgetPwServiceLiveData.value = certificationResponse
+                    val baseUserResponse = BaseUserResponse(false, status, message)
+                    forgetPwServiceLiveData.value = baseUserResponse
                 }
             }
 
-            override fun onFailure(call: Call<CertificationResponse>, t: Throwable) {
+            override fun onFailure(call: Call<BaseUserResponse>, t: Throwable) {
                 forgetPwServiceLiveData.value = null
             }
         })

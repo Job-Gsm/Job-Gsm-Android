@@ -23,6 +23,7 @@ import com.example.job_gsm.viewmodel.SignUpViewModel
 
 class SignUpActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignUpBinding
+    private val signUpViewModel by viewModels<SignUpViewModel>()
     private val signUpEmailViewModel by viewModels<SignUpEmailViewModel>()
     private val checkEmailViewModel by viewModels<CheckEmailViewModel>()
 

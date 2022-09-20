@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.job_gsm.model.ApiClient
 import com.example.job_gsm.model.api.CheckEmailService
-import com.example.job_gsm.model.data.response.CertificationResponse
+import com.example.job_gsm.model.data.response.BaseUserResponse
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -18,7 +18,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class CheckEmailViewModel: ViewModel() {
     var checkEmailService: CheckEmailService
-    var checkEmailServiceLiveData: MutableLiveData<CertificationResponse?> = MutableLiveData()
+    var checkEmailServiceLiveData: MutableLiveData<BaseUserResponse?> = MutableLiveData()
 
     init {
         val interceptor = HttpLoggingInterceptor()
@@ -36,8 +36,8 @@ class CheckEmailViewModel: ViewModel() {
     }
 
     fun checkEmail(key: String) {
-        checkEmailService.checkPw(key).enqueue(object :Callback<CertificationResponse> {
-            override fun onResponse(call: Call<CertificationResponse>, response: Response<CertificationResponse>) {
+        checkEmailService.checkPw(key).enqueue(object :Callback<BaseUserResponse> {
+            override fun onResponse(call: Call<BaseUserResponse>, response: Response<BaseUserResponse>) {
                 if (response.isSuccessful) {
                     checkEmailServiceLiveData.value = response.body()
                 } else {
@@ -45,12 +45,12 @@ class CheckEmailViewModel: ViewModel() {
                     val status = jsonErrorObj.getString("status")
                     val message = jsonErrorObj.getString("message")
 
-                    val certificationResponse = CertificationResponse(false, message, status)
-                    checkEmailServiceLiveData.value = certificationResponse
+                    val baseUserResponse = BaseUserResponse(false, message, status)
+                    checkEmailServiceLiveData.value = baseUserResponse
                 }
             }
 
-            override fun onFailure(call: Call<CertificationResponse>, t: Throwable) {
+            override fun onFailure(call: Call<BaseUserResponse>, t: Throwable) {
                 Log.e("FAIL", "onFailure: ${t.message}, ${t.stackTrace}", t.cause)
             }
         })
