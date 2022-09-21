@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="spinner_set_major">
+        <item>전공 선택</item>
+        <item>back-end</item>
+        <item>front-end</item>
+        <item>designer</item>
+        <item>project_manager</item>
+        <item>android</item>
+        <item>ios</item>
+        <item>full_stack</item>
+        <item>database_administrator</item>
+    </string-array>
+</resources>
