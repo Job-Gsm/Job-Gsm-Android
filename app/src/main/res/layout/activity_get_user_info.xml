@@ -1,9 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/login_bg"
     tools:context=".view.user.signup.GetUserInfoActivity">
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/user_get_bg"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="55dp"
+            android:text="Job-GSM"
+            android:textSize="40sp"
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="이름과 디스코드 깃허브 정보를 입력하세요"
+            android:textSize="23sp"
+            android:gravity="center"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="50dp"/>
+
+        <EditText
+            android:id="@+id/nick_name_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/forget_pw_edit_text_bg"
+            android:hint="nick name"
+            android:paddingStart="10dp"/>
+
+        <TextView
+            android:id="@+id/error_nick_name_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="오류"
+            android:layout_marginStart="40dp"
+            android:visibility="invisible"/>
+
+        <EditText
+            android:id="@+id/discord_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/forget_pw_edit_text_bg"
+            android:hint="discord"
+            android:paddingStart="10dp"/>
+
+        <TextView
+            android:id="@+id/error_discord_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="오류"
+            android:layout_marginStart="40dp"
+            android:visibility="invisible" />
+
+        <EditText
+            android:id="@+id/github_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/forget_pw_edit_text_bg"
+            android:hint="github"
+            android:paddingStart="10dp"/>
+
+        <TextView
+            android:id="@+id/error_github_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="오류"
+            android:layout_marginStart="40dp"
+            android:visibility="invisible"/>
+
+        <Button
+            android:id="@+id/set_user_info_done_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_layout1"
+            android:layout_gravity="center"
+            android:text="완료"
+            android:textColor="@color/white"
+            android:layout_marginTop="20dp"
+            android:textSize="20sp" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
