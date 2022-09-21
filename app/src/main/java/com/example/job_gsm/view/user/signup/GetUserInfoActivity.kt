@@ -1,5 +1,6 @@
 package com.example.job_gsm.view.user.signup
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -29,19 +30,16 @@ class GetUserInfoActivity : AppCompatActivity() {
             if (binding.discordEditText.text.isEmpty()) {
                 binding.errorDiscordText.visibility = View.VISIBLE
                 binding.errorDiscordText.text = "필수 입력 항목입니다."
-                return@setOnClickListener
             }
 
             if (binding.githubEditText.text.isEmpty()) {
                 binding.errorGithubText.visibility = View.VISIBLE
                 binding.errorGithubText.text = "필수 입력 항목입니다."
-                return@setOnClickListener
             }
 
             if (binding.nickNameEditText.text.isEmpty()) {
                 binding.errorNickNameText.visibility = View.VISIBLE
                 binding.errorNickNameText.text = "필수 입력 항목입니다."
-                return@setOnClickListener
             }
             signUp(signUpResponse)
         }
@@ -82,7 +80,8 @@ class GetUserInfoActivity : AppCompatActivity() {
         userInfoViewModel.setUserInfo(signUpResponse.email, binding.nickNameEditText.text.toString(), binding.githubEditText.text.toString(), binding.discordEditText.text.toString())
         userInfoViewModel.userInfoLiveData.observe(this, Observer { response ->
             if (response?.success == true) {
-//                startActivity()
+                startActivity(Intent(this, SelectMajorActivity::class.java)
+                    .putExtra("email", signUpResponse.email))
             } else {
                 if (response?.status == "404") {
                     Toast.makeText(this, "계정을 찾을 수 없습니다.", Toast.LENGTH_SHORT).show()
