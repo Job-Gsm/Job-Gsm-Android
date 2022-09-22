@@ -39,6 +39,8 @@ class SelectMajorActivity : AppCompatActivity() {
         selectMajorViewModel.setMajor(email!!, binding.selectMajorSpinner.selectedItem.toString(), binding.setCareerEditText.text.toString().toInt())
         selectMajorViewModel.selectMajorLiveData.observe(this, Observer { response ->
             if (response?.success == true) {
+                // 회원가입
+                
                 Toast.makeText(this, "회원가입이 완료되었습니다.", Toast.LENGTH_SHORT).show()
                 startActivity(Intent(this, SignInActivity::class.java))
             } else {
