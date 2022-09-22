@@ -1,4 +1,4 @@
-package com.example.job_gsm.model.api
+package com.example.job_gsm.model.api.user
 
 import com.example.job_gsm.model.data.request.SignInRequest
 import com.example.job_gsm.model.data.response.SignResponse

@@ -17,9 +17,9 @@ import androidx.lifecycle.Observer
 import com.example.job_gsm.databinding.ActivitySignUpBinding
 import com.example.job_gsm.databinding.CustomDialogForgetPwSendEmailBinding
 import com.example.job_gsm.model.data.request.SignUpRequest
-import com.example.job_gsm.viewmodel.CheckEmailViewModel
-import com.example.job_gsm.viewmodel.SignUpEmailViewModel
-import com.example.job_gsm.viewmodel.SignUpViewModel
+import com.example.job_gsm.viewmodel.user.CheckEmailViewModel
+import com.example.job_gsm.viewmodel.user.SignUpEmailViewModel
+import com.example.job_gsm.viewmodel.user.SignUpViewModel
 
 class SignUpActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignUpBinding

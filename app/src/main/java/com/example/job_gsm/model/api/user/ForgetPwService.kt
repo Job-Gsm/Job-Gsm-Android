@@ -1,4 +1,4 @@
-package com.example.job_gsm.model.api
+package com.example.job_gsm.model.api.user
 
 import com.example.job_gsm.model.data.response.BaseUserResponse
 import retrofit2.Call

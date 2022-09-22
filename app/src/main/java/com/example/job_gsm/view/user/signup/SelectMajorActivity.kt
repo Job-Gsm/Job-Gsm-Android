@@ -3,12 +3,13 @@ package com.example.job_gsm.view.user.signup
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.example.job_gsm.databinding.ActivitySelectMajorBinding
 import com.example.job_gsm.view.user.SignInActivity
-import com.example.job_gsm.viewmodel.SelectMajorViewModel
+import com.example.job_gsm.viewmodel.user.SelectMajorViewModel
 
 class SelectMajorActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySelectMajorBinding
@@ -21,6 +22,7 @@ class SelectMajorActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val email = intent.getStringExtra("email")
+        Log.d("TAG", "onCreate email: $email")
         binding.setMajorBtn.setOnClickListener {
             if (binding.selectMajorSpinner.selectedItem == "전공 선택") {
                 binding.setMajorErrorText.text = "전공을 선택해주세요."

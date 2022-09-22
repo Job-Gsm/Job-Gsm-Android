@@ -1,10 +1,10 @@
-package com.example.job_gsm.viewmodel
+package com.example.job_gsm.viewmodel.user
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.job_gsm.model.ApiClient
-import com.example.job_gsm.model.api.SignUpService
+import com.example.job_gsm.model.api.user.SignUpService
 import com.example.job_gsm.model.data.request.SignUpRequest
 import com.example.job_gsm.model.data.response.SignResponse
 import com.google.gson.GsonBuilder
@@ -51,7 +51,7 @@ class SignUpViewModel: ViewModel() {
                     val jsonErrorObj = JSONObject(response.errorBody()!!.string())
                     val status = jsonErrorObj.getString("status")
                     val message = jsonErrorObj.getString("message")
-                    val signUpResponse = SignResponse(null, status, message, null)
+                    val signUpResponse = SignResponse(false, status, message, null)
 
                     signUpServiceLiveData.value = signUpResponse
                     Log.d(TAG, "onResponse else: $signUpResponse")

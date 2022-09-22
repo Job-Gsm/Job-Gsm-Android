@@ -13,8 +13,8 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.example.job_gsm.databinding.ActivityForgotPwBinding
 import com.example.job_gsm.databinding.CustomDialogForgetPwSendEmailBinding
-import com.example.job_gsm.viewmodel.CheckEmailViewModel
-import com.example.job_gsm.viewmodel.ForgetPwViewModel
+import com.example.job_gsm.viewmodel.user.CheckEmailViewModel
+import com.example.job_gsm.viewmodel.user.ForgetPwViewModel
 
 class ForgotPwActivity : AppCompatActivity() {
     private lateinit var binding: ActivityForgotPwBinding

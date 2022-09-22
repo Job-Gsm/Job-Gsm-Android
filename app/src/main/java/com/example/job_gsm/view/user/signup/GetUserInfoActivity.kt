@@ -10,8 +10,8 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.example.job_gsm.databinding.ActivityGetUserInfoBinding
 import com.example.job_gsm.model.data.request.SignUpRequest
-import com.example.job_gsm.viewmodel.SignUpViewModel
-import com.example.job_gsm.viewmodel.UserInfoViewModel
+import com.example.job_gsm.viewmodel.user.SignUpViewModel
+import com.example.job_gsm.viewmodel.user.UserInfoViewModel
 
 class GetUserInfoActivity : AppCompatActivity() {
     private lateinit var binding: ActivityGetUserInfoBinding
@@ -26,20 +26,27 @@ class GetUserInfoActivity : AppCompatActivity() {
 
         val signUpResponse = intent.getSerializableExtra("user") as SignUpRequest
 
+        val errorDiscord = binding.errorDiscordText
+        val errorGithub = binding.errorGithubText
+        val errorUsername = binding.errorNickNameText
         binding.setUserInfoDoneBtn.setOnClickListener {
+            errorDiscord.visibility = View.INVISIBLE
+            errorGithub.visibility = View.INVISIBLE
+            errorUsername.visibility = View.INVISIBLE
+
             if (binding.discordEditText.text.isEmpty()) {
-                binding.errorDiscordText.visibility = View.VISIBLE
-                binding.errorDiscordText.text = "필수 입력 항목입니다."
+                errorDiscord.visibility = View.VISIBLE
+                errorDiscord.text = "필수 입력 항목입니다."
             }
 
             if (binding.githubEditText.text.isEmpty()) {
-                binding.errorGithubText.visibility = View.VISIBLE
-                binding.errorGithubText.text = "필수 입력 항목입니다."
+                errorGithub.visibility = View.VISIBLE
+                errorGithub.text = "필수 입력 항목입니다."
             }
 
             if (binding.nickNameEditText.text.isEmpty()) {
-                binding.errorNickNameText.visibility = View.VISIBLE
-                binding.errorNickNameText.text = "필수 입력 항목입니다."
+                errorUsername.visibility = View.VISIBLE
+                errorUsername.text = "필수 입력 항목입니다."
             }
             signUp(signUpResponse)
         }
@@ -55,20 +62,16 @@ class GetUserInfoActivity : AppCompatActivity() {
                 when(response?.message) {
                     "중복된 이메일 입니다." -> {
                         Toast.makeText(this, "이미 사용중인 이메일입니다.", Toast.LENGTH_SHORT).show()
-                        finish()
                     }
                     "email : 학교계정을 입력해주세요" -> {
                         Toast.makeText(this, "이메일이 학교계정이 아닙니다.", Toast.LENGTH_SHORT).show()
-                        finish()
                     }
                     "password : 크기가 5에서 20 사이여야 합니다" -> {
                         Toast.makeText(this, "비밀번호 길이가 5~20 이어야 합니다.", Toast.LENGTH_SHORT).show()
-                        finish()
                     }
                     "email : 학교계정을 입력해주세요, password : 크기가 5에서 20 사이여야 합니다" -> {
                         Toast.makeText(this, "이메일이 학교계정이 아닙니다.", Toast.LENGTH_SHORT).show()
                         Toast.makeText(this, "비밀번호 길이가 5~20 이어야 합니다.", Toast.LENGTH_SHORT).show()
-                        finish()
                     }
                 }
                 Log.d("TAG", "signUp: signup fail, ${response?.message}")

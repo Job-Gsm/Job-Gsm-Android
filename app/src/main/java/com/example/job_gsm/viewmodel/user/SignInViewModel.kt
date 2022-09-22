@@ -1,10 +1,10 @@
-package com.example.job_gsm.viewmodel
+package com.example.job_gsm.viewmodel.user
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.job_gsm.model.ApiClient
-import com.example.job_gsm.model.api.SignInService
+import com.example.job_gsm.model.api.user.SignInService
 import com.example.job_gsm.model.data.request.SignInRequest
 import com.example.job_gsm.model.data.response.SignResponse
 import com.google.gson.GsonBuilder

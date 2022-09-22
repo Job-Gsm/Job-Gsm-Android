@@ -1,10 +1,10 @@
-package com.example.job_gsm.viewmodel
+package com.example.job_gsm.viewmodel.user
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.job_gsm.model.ApiClient
-import com.example.job_gsm.model.api.SignUpEmailService
+import com.example.job_gsm.model.api.user.SendEmailService
 import com.example.job_gsm.model.data.response.BaseUserResponse
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
@@ -17,7 +17,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class SignUpEmailViewModel: ViewModel() {
-    var signUpEmailService: SignUpEmailService
+    var sendEmailService: SendEmailService
     var signUpEmailServiceLiveData: MutableLiveData<BaseUserResponse?> = MutableLiveData()
 
     init {
@@ -27,16 +27,16 @@ class SignUpEmailViewModel: ViewModel() {
             .addInterceptor(interceptor)
             .build()
 
-        signUpEmailService = Retrofit.Builder()
+        sendEmailService = Retrofit.Builder()
             .baseUrl(ApiClient.BASE_URL)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
             .build()
-            .create(SignUpEmailService::class.java)
+            .create(SendEmailService::class.java)
     }
 
     fun signUpSendEmail(email: String) {
-        signUpEmailService.signInEmail(email).enqueue(object :Callback<BaseUserResponse> {
+        sendEmailService.signInEmail(email).enqueue(object :Callback<BaseUserResponse> {
             override fun onResponse(call: Call<BaseUserResponse>, response: Response<BaseUserResponse>) {
                 if (response.isSuccessful) {
                     signUpEmailServiceLiveData.value = response.body()

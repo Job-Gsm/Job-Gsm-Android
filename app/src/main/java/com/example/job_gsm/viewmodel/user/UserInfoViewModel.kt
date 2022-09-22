@@ -1,11 +1,11 @@
-package com.example.job_gsm.viewmodel
+package com.example.job_gsm.viewmodel.user
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.job_gsm.model.ApiClient
-import com.example.job_gsm.model.api.SelectMajorService
-import com.example.job_gsm.model.data.request.SelectMajorRequest
+import com.example.job_gsm.model.api.user.UserInfoService
+import com.example.job_gsm.model.data.request.UserInfoRequest
 import com.example.job_gsm.model.data.response.BaseUserResponse
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
@@ -17,13 +17,13 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class SelectMajorViewModel: ViewModel() {
-    companion object {
-        private const val TAG = "SelectMajorViewModel"
-    }
+class UserInfoViewModel: ViewModel() {
+    var userInfoService: UserInfoService
+    var userInfoLiveData: MutableLiveData<BaseUserResponse?> = MutableLiveData()
 
-    var selectMajorService: SelectMajorService
-    val selectMajorLiveData: MutableLiveData<BaseUserResponse?> = MutableLiveData()
+    companion object {
+        private const val TAG = "UserInfoViewModel"
+    }
 
     init {
         val interceptor = HttpLoggingInterceptor()
@@ -32,32 +32,31 @@ class SelectMajorViewModel: ViewModel() {
             .addInterceptor(interceptor)
             .build()
 
-        selectMajorService = Retrofit.Builder()
+        userInfoService = Retrofit.Builder()
             .baseUrl(ApiClient.BASE_URL)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
             .build()
-            .create(SelectMajorService::class.java)
+            .create(UserInfoService::class.java)
     }
 
-    fun setMajor(email: String, major: String, career: Int) {
-        selectMajorService.setMajor(SelectMajorRequest(email, major, career)).enqueue(object :Callback<BaseUserResponse?> {
-            override fun onResponse(call: Call<BaseUserResponse?>, response: Response<BaseUserResponse?>) {
+    fun setUserInfo(email: String, username: String, github: String, discord: String) {
+        userInfoService.setUserInfo(UserInfoRequest(email, username, github, discord)).enqueue(object :Callback<BaseUserResponse> {
+            override fun onResponse(call: Call<BaseUserResponse>, response: Response<BaseUserResponse>) {
                 if (response.isSuccessful) {
-                    selectMajorLiveData.value = response.body()
+                    userInfoLiveData.value = response.body()
                 } else {
                     val jsonErrorObj = JSONObject(response.errorBody()!!.string())
+                    Log.d("TAG", "onResponse 400: $jsonErrorObj")
                     val status = jsonErrorObj.getString("status")
                     val message = jsonErrorObj.getString("message")
-                    val baseUserResponse = BaseUserResponse(false, status, message)
 
-                    selectMajorLiveData.value = baseUserResponse
+                    userInfoLiveData.value = BaseUserResponse(false, message, status)
                 }
             }
 
-            override fun onFailure(call: Call<BaseUserResponse?>, t: Throwable) {
+            override fun onFailure(call: Call<BaseUserResponse>, t: Throwable) {
                 Log.e(TAG, "onFailure: ${t.message}, ${t.stackTrace}", t.cause)
-                selectMajorLiveData.value = null
             }
         })
     }

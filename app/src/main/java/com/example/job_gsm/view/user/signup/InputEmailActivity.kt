@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.example.job_gsm.databinding.ActivityInputEmailBinding
 import com.example.job_gsm.model.data.request.SignUpRequest
-import com.example.job_gsm.viewmodel.SignUpEmailViewModel
+import com.example.job_gsm.viewmodel.user.SignUpEmailViewModel
 
 class InputEmailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityInputEmailBinding
@@ -22,7 +22,7 @@ class InputEmailActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val signUpRequest = intent.getSerializableExtra("data") as SignUpRequest
-        Log.d("TAG", "onCreate: $signUpRequest")
+        Log.d("TAG", "onCreate signUpRequest: $signUpRequest")
 
         binding.registerEmailBtn.setOnClickListener {
             binding.certificationEmailErrorText.visibility = View.INVISIBLE
