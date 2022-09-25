@@ -1,4 +1,4 @@
-package com.example.job_gsm.model
+package com.example.job_gsm.data
 
 object ApiClient {
     const val BASE_URL = "http://192.168.0.93:8081/"

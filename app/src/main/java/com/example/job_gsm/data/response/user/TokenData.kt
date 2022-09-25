@@ -1,4 +1,4 @@
-package com.example.job_gsm.model.data.response
+package com.example.job_gsm.data.response.user
 
 import com.google.gson.annotations.SerializedName
 

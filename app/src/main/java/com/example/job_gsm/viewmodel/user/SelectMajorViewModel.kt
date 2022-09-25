@@ -1,64 +1,32 @@
 package com.example.job_gsm.viewmodel.user
 
-import android.util.Log
+import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.job_gsm.model.ApiClient
-import com.example.job_gsm.model.api.user.SelectMajorService
-import com.example.job_gsm.model.data.request.SelectMajorRequest
-import com.example.job_gsm.model.data.response.BaseUserResponse
-import com.google.gson.GsonBuilder
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
-import org.json.JSONObject
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
+import com.example.job_gsm.data.response.user.BaseUserResponse
+import com.example.job_gsm.repository.UserRepository
+import kotlinx.coroutines.launch
 
-class SelectMajorViewModel: ViewModel() {
-    companion object {
-        private const val TAG = "SelectMajorViewModel"
-    }
-
-    var selectMajorService: SelectMajorService
-    val selectMajorLiveData: MutableLiveData<BaseUserResponse?> = MutableLiveData()
+class SelectMajorViewModel(private val repository: UserRepository, private val email: String, private val major: String,
+                           private val career: Int): ViewModel()
+{
+    private val _selectMajorLiveData: MutableLiveData<BaseUserResponse?> = MutableLiveData()
+    val selectMajorLiveData: MutableLiveData<BaseUserResponse?>
+    get() = _selectMajorLiveData
 
     init {
-        val interceptor = HttpLoggingInterceptor()
-        interceptor.level = HttpLoggingInterceptor.Level.BODY
-        val client = OkHttpClient.Builder()
-            .addInterceptor(interceptor)
-            .build()
-
-        selectMajorService = Retrofit.Builder()
-            .baseUrl(ApiClient.BASE_URL)
-            .client(client)
-            .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
-            .build()
-            .create(SelectMajorService::class.java)
+        viewModelScope.launch {
+            _selectMajorLiveData.value = repository.selectMajor(email, major, career)
+        }
     }
 
-    fun setMajor(email: String, major: String, career: Int) {
-        selectMajorService.setMajor(SelectMajorRequest(email, major, career)).enqueue(object :Callback<BaseUserResponse?> {
-            override fun onResponse(call: Call<BaseUserResponse?>, response: Response<BaseUserResponse?>) {
-                if (response.isSuccessful) {
-                    selectMajorLiveData.value = response.body()
-                } else {
-                    val jsonErrorObj = JSONObject(response.errorBody()!!.string())
-                    val status = jsonErrorObj.getString("status")
-                    val message = jsonErrorObj.getString("message")
-                    val baseUserResponse = BaseUserResponse(false, status, message)
-
-                    selectMajorLiveData.value = baseUserResponse
-                }
-            }
-
-            override fun onFailure(call: Call<BaseUserResponse?>, t: Throwable) {
-                Log.e(TAG, "onFailure: ${t.message}, ${t.stackTrace}", t.cause)
-                selectMajorLiveData.value = null
-            }
-        })
+    class Factory(private val application: Application,private val email: String, private val major: String,
+                  private val career: Int): ViewModelProvider.Factory
+    {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            return SelectMajorViewModel(UserRepository(application), email, major, career) as T
+        }
     }
 }

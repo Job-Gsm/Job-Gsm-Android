@@ -1,12 +1,12 @@
 package com.example.job_gsm.view.user
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.example.job_gsm.databinding.ActivitySignInBinding
 import com.example.job_gsm.view.MainActivity
 import com.example.job_gsm.view.user.signup.SignUpActivity
@@ -15,8 +15,14 @@ import com.example.job_gsm.viewmodel.user.SignInViewModel
 
 class SignInActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignInBinding
-    private val viewModel by viewModels<SignInViewModel>()
-    private val newTokenViewModel by viewModels<NewTokenViewModel>()
+
+    private val viewModel by lazy {
+        ViewModelProvider(this, SignInViewModel.Factory(application, email, pw))[SignInViewModel::class.java] }
+    private val newTokenViewModel by lazy {
+        ViewModelProvider(this, NewTokenViewModel.Factory(application, email))[NewTokenViewModel::class.java] }
+
+    private lateinit var email: String
+    private lateinit var pw: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +37,18 @@ class SignInActivity : AppCompatActivity() {
         binding.logInBtn.setOnClickListener {
             binding.emailInputLayout.isErrorEnabled = false
             binding.pwInputLayout.isErrorEnabled = false
-            ifEditTextIsEmpty()
+
+            email = binding.loginId.text.toString()
+            pw = binding.loginPw.text.toString()
+            if (email.isEmpty()) {
+                binding.emailInputLayout.error = "필수 입력사항입니다."
+                return@setOnClickListener
+            }
+            if (pw.isEmpty()) {
+                binding.pwInputLayout.error = "필수 입력사항입니다."
+                return@setOnClickListener
+            }
+            login()
         }
 
         binding.forgetText.setOnClickListener {
@@ -39,27 +56,10 @@ class SignInActivity : AppCompatActivity() {
         }
     }
 
-    private fun ifEditTextIsEmpty() {
-        if (binding.loginId.text.toString().isNotEmpty() && binding.loginPw.text.toString().isNotEmpty()) {
-            login(binding.loginId.text.toString(), binding.loginPw.text.toString())
-        } else if (binding.loginId.text.toString().isEmpty() && binding.loginPw.text.toString().isEmpty()) {
-            binding.emailInputLayout.error = "필수 입력사항입니다."
-            binding.pwInputLayout.error = "필수 입력사항입니다."
-            return
-        } else if (binding.loginId.text.toString().isEmpty()) {
-            binding.emailInputLayout.error = "필수 입력사항입니다."
-            return
-        }  else if (binding.loginPw.text.toString().isEmpty()) {
-            binding.pwInputLayout.error = "필수 입력사항입니다."
-            return
-        }
-    }
-
-    private fun login(email: String, pw: String) {
+    private fun login() {
         val emailInputLay = binding.emailInputLayout
         val pwInputLay = binding.pwInputLayout
 
-        viewModel.signInObserver(email, pw)
         viewModel.signInServiceLiveData.observe(this, Observer { response ->
             if (response != null) {
                 when(response.message) {
@@ -99,7 +99,6 @@ class SignInActivity : AppCompatActivity() {
     }
 
     private fun setToken() {
-        newTokenViewModel.issuedToken(binding.loginId.text.toString())
         newTokenViewModel.newTokenLiveData.observe(this, Observer { response ->
             if (response?.success == true) {
                 Log.d("TAG", "setToken 발급된 새 토큰: ${response.result?.accessToken}")

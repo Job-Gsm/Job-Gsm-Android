@@ -11,21 +11,24 @@ import android.util.Log
 import android.view.View
 import android.view.Window
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.example.job_gsm.databinding.ActivitySignUpBinding
 import com.example.job_gsm.databinding.CustomDialogForgetPwSendEmailBinding
-import com.example.job_gsm.model.data.request.SignUpRequest
 import com.example.job_gsm.viewmodel.user.CheckEmailViewModel
-import com.example.job_gsm.viewmodel.user.SignUpEmailViewModel
-import com.example.job_gsm.viewmodel.user.SignUpViewModel
+import com.example.job_gsm.viewmodel.user.SendEmailViewModel
 
 class SignUpActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignUpBinding
-    private val signUpViewModel by viewModels<SignUpViewModel>()
-    private val signUpEmailViewModel by viewModels<SignUpEmailViewModel>()
-    private val checkEmailViewModel by viewModels<CheckEmailViewModel>()
+
+    private val sendEmailViewModel by lazy {
+        ViewModelProvider(this, SendEmailViewModel.Factory(application, email))[SendEmailViewModel::class.java] }
+    private val checkEmailViewModel by lazy {
+        ViewModelProvider(this, CheckEmailViewModel.Factory(application, key))[CheckEmailViewModel::class.java] }
+
+    private lateinit var email: String
+    private lateinit var key: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,13 +53,13 @@ class SignUpActivity : AppCompatActivity() {
         }
 
         binding.certSignInEmailBtn.setOnClickListener {
-            if (binding.signInEmail.text!!.isEmpty()) {
+            email = binding.signInEmail.text.toString()
+            if (email.isEmpty()) {
                 checkEmail.visibility = View.VISIBLE
                 checkEmail.text = "필수 입력 항목입니다."
-                Log.d("TAG", "onCreate: is empty")
+                Log.d("TAG", "onCreate: email is empty")
             } else {
-                signUpEmailViewModel.signUpSendEmail(binding.signInEmail.text.toString())
-                signUpEmailViewModel.signUpEmailServiceLiveData.observe(this, Observer {
+                sendEmailViewModel.sendEmailServiceLiveData.observe(this, Observer {
                     Log.d("TAG", "onCreate: $it")
                     if (it?.message == "email : 학교계정을 입력해주세요") {
                         Log.d("TAG", "onCreate: not school email")
@@ -74,7 +77,9 @@ class SignUpActivity : AppCompatActivity() {
     private fun toGetUserInfo() {
         if (binding.checkCertEmailText.text.toString() == "인증이 완료되었습니다.") {
             startActivity(Intent(this, GetUserInfoActivity::class.java)
-                .putExtra("user", SignUpRequest("", binding.signInEmail.text.toString(), binding.signInPw.text.toString())))
+                .putExtra("email", email)
+                .putExtra("pw", binding.signInPw.text.toString())
+            )
         }
     }
 
@@ -93,7 +98,7 @@ class SignUpActivity : AppCompatActivity() {
 
         // 인증번호 인증하기
         dialogBinding.certificationBtn.setOnClickListener {
-            checkEmailViewModel.checkEmail(getNumber(dialogBinding))
+            key = getNumber(dialogBinding)  // 초기화
             checkEmailViewModel.checkEmailServiceLiveData.observe(this, Observer { response ->
                 if (response?.status == "400") {
                     Log.d("TAG", "sendEmail: 인증 실패")

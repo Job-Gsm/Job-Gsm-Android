@@ -1,4 +1,4 @@
-package com.example.job_gsm.model.data.request
+package com.example.job_gsm.data.request
 
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
