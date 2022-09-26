@@ -2,10 +2,7 @@ package com.example.job_gsm.repository
 
 import android.app.Application
 import android.util.Log
-import com.example.job_gsm.data.request.SelectMajorRequest
-import com.example.job_gsm.data.request.SignInRequest
-import com.example.job_gsm.data.request.SignUpRequest
-import com.example.job_gsm.data.request.UserInfoRequest
+import com.example.job_gsm.data.request.*
 import com.example.job_gsm.data.response.user.BaseUserResponse
 import com.example.job_gsm.data.response.user.NewTokenResponse
 import com.example.job_gsm.data.response.user.UserResponse
@@ -86,8 +83,7 @@ class UserRepository(application: Application) {
             val status = jsonErrorObj.getString("status")
             val message = jsonErrorObj.getString("message")
 
-            val baseUserResponse = BaseUserResponse(false, message, status)
-            baseUserResponse
+            BaseUserResponse(false, message, status)
         }
     }
 
@@ -101,8 +97,7 @@ class UserRepository(application: Application) {
             val status = jsonErrorObj.getString("status")
             val message = jsonErrorObj.getString("message")
 
-            val baseUserResponse = BaseUserResponse(false, message, status)
-            baseUserResponse
+            BaseUserResponse(false, message, status)
         }
     }
 
@@ -130,9 +125,22 @@ class UserRepository(application: Application) {
             val jsonErrorObj = JSONObject(response.errorBody()!!.string())
             val status = jsonErrorObj.getString("status")
             val message = jsonErrorObj.getString("message")
-            val baseUserResponse = BaseUserResponse(false, status, message)
 
-            baseUserResponse
+            BaseUserResponse(false, status, message)
+        }
+    }
+
+    // change password
+    suspend fun changePw(email: String, newPw: String): BaseUserResponse {
+        val response = UserObject.changePwService.changePw(ChangePwRequest(email, newPw))
+        return if (response.isSuccessful) {
+            response.body() as BaseUserResponse
+        } else {
+            val jsonErrorObj = JSONObject(response.errorBody()!!.string())
+            val status = jsonErrorObj.getString("status")
+            val message = jsonErrorObj.getString("message")
+
+            BaseUserResponse(false, status, message)
         }
     }
 }

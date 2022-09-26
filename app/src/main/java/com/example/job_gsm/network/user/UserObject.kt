@@ -56,4 +56,9 @@ object UserObject {
     val selectMajorService: SelectMajorService by lazy {
         userRetrofit.create(SelectMajorService::class.java)
     }
+
+    // change password
+    val changePwService: ChangePwService by lazy {
+        userRetrofit.create(ChangePwService::class.java)
+    }
 }
