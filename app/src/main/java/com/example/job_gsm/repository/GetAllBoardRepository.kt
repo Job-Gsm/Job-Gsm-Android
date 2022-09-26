@@ -7,6 +7,16 @@ import org.json.JSONObject
 import retrofit2.Response
 
 class GetAllBoardRepository(application: Application) {
+    // singleton pattern
+    companion object {
+        private var instance: GetAllBoardRepository? = null
+
+        fun getInstance(application: Application): GetAllBoardRepository? {
+            if (instance == null) instance = GetAllBoardRepository(application)
+            return instance
+        }
+    }
+
     // retrofit
     // get all board
     suspend fun getAllBoard(page: Int): GetAllBoardResponse {
@@ -19,16 +29,6 @@ class GetAllBoardRepository(application: Application) {
             val message = jsonErrorObj.getString("message")
 
             GetAllBoardResponse(false, message = message, status = status, null)
-        }
-    }
-
-    // singleton pattern
-    companion object {
-        private var instance: GetAllBoardRepository? = null
-
-        fun getInstance(application: Application): GetAllBoardRepository? {
-            if (instance == null) instance = GetAllBoardRepository(application)
-            return instance
         }
     }
 }

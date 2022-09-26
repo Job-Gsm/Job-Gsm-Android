@@ -7,5 +7,5 @@ import retrofit2.http.Query
 
 interface GetAllBoardService {
     @GET("user/board?")
-    fun getAllBoard(@Query("page") page: Int): Response<GetAllBoardResponse>
+    suspend fun getAllBoard(@Query("page") page: Int): Response<GetAllBoardResponse>
 }
