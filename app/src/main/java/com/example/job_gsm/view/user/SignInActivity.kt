@@ -3,14 +3,13 @@ package com.example.job_gsm.view.user
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.job_gsm.databinding.ActivitySignInBinding
 import com.example.job_gsm.view.MainActivity
 import com.example.job_gsm.view.user.signup.SignUpActivity
-import com.example.job_gsm.viewmodel.NewTokenViewModel
+import com.example.job_gsm.viewmodel.user.NewTokenViewModel
 import com.example.job_gsm.viewmodel.user.SignInViewModel
 
 class SignInActivity : AppCompatActivity() {
