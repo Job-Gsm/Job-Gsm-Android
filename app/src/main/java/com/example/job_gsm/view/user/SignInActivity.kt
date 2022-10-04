@@ -3,6 +3,7 @@ package com.example.job_gsm.view.user
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -34,17 +35,17 @@ class SignInActivity : AppCompatActivity() {
         }
 
         binding.logInBtn.setOnClickListener {
-            binding.emailInputLayout.isErrorEnabled = false
-            binding.pwInputLayout.isErrorEnabled = false
+            binding.emailErrorText.visibility = View.INVISIBLE
+            binding.pwErrorText.visibility = View.INVISIBLE
 
-            email = binding.loginId.text.toString()
+            email = binding.loginEmail.text.toString()
             pw = binding.loginPw.text.toString()
             if (email.isEmpty()) {
-                binding.emailInputLayout.error = "필수 입력사항입니다."
+                binding.emailErrorText.text = "필수 입력사항입니다."
                 return@setOnClickListener
             }
             if (pw.isEmpty()) {
-                binding.pwInputLayout.error = "필수 입력사항입니다."
+                binding.pwErrorText.text = "필수 입력사항입니다."
                 return@setOnClickListener
             }
             login()
@@ -56,30 +57,30 @@ class SignInActivity : AppCompatActivity() {
     }
 
     private fun login() {
-        val emailInputLay = binding.emailInputLayout
-        val pwInputLay = binding.pwInputLayout
+        val emailError = binding.emailErrorText
+        val pwError = binding.pwErrorText
 
         viewModel.signInServiceLiveData.observe(this, Observer { response ->
             if (response != null) {
                 when(response.message) {
                     "사용자를 찾을 수 없습니다." -> {
-                        emailInputLay.error = "계정을 찾을 수 없습니다."
+                        emailError.text = "계정을 찾을 수 없습니다."
                     }
                     "비밀번호가 일치하지 않습니다." -> {
-                        pwInputLay.error = "비밀번호가 일치하지 않습니다."
+                        pwError.text = "비밀번호가 일치하지 않습니다."
                     }
                     "email : 학교계정을 입력해주세요" -> {
-                        emailInputLay.error = "학교계정을 입력해 주세요."
+                        emailError.text = "학교계정을 입력해 주세요."
                     }
                     "email : 이메일 형식이 아닙니다" -> {
-                        emailInputLay.error = "이메일 형식이 다릅니다."
+                        emailError.text = "이메일 형식이 다릅니다."
                     }
                     "password : 크기가 4에서 15 사이여야 합니다" -> {
-                        pwInputLay.error = "길이가 4자~15자 사이여야 합니다."
+                        pwError.text = "길이가 4자~15자 사이여야 합니다."
                     }
                     "password : 크기가 4에서 15 사이여야 합니다, email : 학교계정을 입력해주세요" -> {
-                        emailInputLay.error = "학교계정을 입력해 주세요."
-                        pwInputLay.error = "길이가 4자~15자 사이여야 합니다."
+                        emailError.text = "학교계정을 입력해 주세요."
+                        pwError.text = "길이가 4자~15자 사이여야 합니다."
                     }
                     "만료된 토큰입니다." -> {
                         setToken()
@@ -102,7 +103,7 @@ class SignInActivity : AppCompatActivity() {
             if (response?.success == true) {
                 Log.d("TAG", "setToken 발급된 새 토큰: ${response.result?.accessToken}")
             } else {
-                binding.emailInputLayout.error = "학교계정을 입력해주세요"
+                binding.emailErrorText.text = "학교계정을 입력해주세요"
                 Log.d("TAG", "setToken failed: $response")
             }
         })
