@@ -25,7 +25,7 @@ class SignUpActivity : AppCompatActivity() {
     private val sendEmailViewModel by lazy {
         ViewModelProvider(this, SendEmailViewModel.Factory(application, email))[SendEmailViewModel::class.java] }
     private val checkEmailViewModel by lazy {
-        ViewModelProvider(this, CheckEmailViewModel.Factory(application, key))[CheckEmailViewModel::class.java] }
+        ViewModelProvider(this, CheckEmailViewModel.Factory(application, email, key))[CheckEmailViewModel::class.java] }
 
     private lateinit var email: String
     private lateinit var key: String

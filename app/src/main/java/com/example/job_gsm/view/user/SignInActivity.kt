@@ -64,21 +64,28 @@ class SignInActivity : AppCompatActivity() {
             if (response != null) {
                 when(response.message) {
                     "사용자를 찾을 수 없습니다." -> {
+                        emailError.visibility = View.VISIBLE
                         emailError.text = "계정을 찾을 수 없습니다."
                     }
                     "비밀번호가 일치하지 않습니다." -> {
+                        pwError.visibility = View.VISIBLE
                         pwError.text = "비밀번호가 일치하지 않습니다."
                     }
                     "email : 학교계정을 입력해주세요" -> {
+                        emailError.visibility = View.VISIBLE
                         emailError.text = "학교계정을 입력해 주세요."
                     }
                     "email : 이메일 형식이 아닙니다" -> {
+                        emailError.visibility = View.VISIBLE
                         emailError.text = "이메일 형식이 다릅니다."
                     }
                     "password : 크기가 4에서 15 사이여야 합니다" -> {
+                        pwError.visibility = View.VISIBLE
                         pwError.text = "길이가 4자~15자 사이여야 합니다."
                     }
                     "password : 크기가 4에서 15 사이여야 합니다, email : 학교계정을 입력해주세요" -> {
+                        emailError.visibility = View.VISIBLE
+                        pwError.visibility = View.VISIBLE
                         emailError.text = "학교계정을 입력해 주세요."
                         pwError.text = "길이가 4자~15자 사이여야 합니다."
                     }

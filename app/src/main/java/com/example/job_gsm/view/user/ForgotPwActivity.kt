@@ -28,7 +28,7 @@ class ForgotPwActivity : AppCompatActivity() {
     private val sendEmailViewModel by lazy {    // send email
         ViewModelProvider(this, SendEmailViewModel.Factory(application, email))[SendEmailViewModel::class.java] }
     private val checkEmailViewModel by lazy {   // check email
-        ViewModelProvider(this, CheckEmailViewModel.Factory(application, key))[CheckEmailViewModel::class.java] }
+        ViewModelProvider(this, CheckEmailViewModel.Factory(application, email, key))[CheckEmailViewModel::class.java] }
 
     private lateinit var email: String
     private lateinit var newPw: String

@@ -88,8 +88,8 @@ class UserRepository(application: Application) {
     }
 
     // check email
-    suspend fun checkEmail(key: String): BaseUserResponse {
-        val response = UserObject.checkEmailService.checkPw(key)
+    suspend fun checkEmail(body: CheckEmailRequest): BaseUserResponse {
+        val response = UserObject.checkEmailService.checkPw(body)
         return if (response.isSuccessful) {
             response.body() as BaseUserResponse
         } else {
