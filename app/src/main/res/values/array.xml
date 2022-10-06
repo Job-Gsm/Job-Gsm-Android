@@ -11,4 +11,17 @@
         <item>full_stack</item>
         <item>database_administrator</item>
     </string-array>
+    
+    <string-array name="career">
+        <item>경력</item>
+        <item>전체</item>
+        <item>신입</item>
+        <item>경력 1년</item>
+        <item>경력 2년</item>
+        <item>경력 3년</item>
+        <item>경력 4년</item>
+        <item>경력 5년</item>
+        <item>경력 6년</item>
+        <item>7년 이상</item>
+    </string-array>
 </resources>

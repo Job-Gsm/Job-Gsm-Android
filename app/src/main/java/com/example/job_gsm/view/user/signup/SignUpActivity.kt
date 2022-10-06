@@ -60,7 +60,7 @@ class SignUpActivity : AppCompatActivity() {
                 Log.d("TAG", "onCreate: email is empty")
             } else {
                 sendEmailViewModel.sendEmailServiceLiveData.observe(this, Observer {
-                    Log.d("TAG", "onCreate: $it")
+                    Log.d("TAG", "onCreate send email: $it")
                     if (it?.message == "email : 학교계정을 입력해주세요") {
                         Log.d("TAG", "onCreate: not school email")
                         checkEmail.visibility = View.VISIBLE
